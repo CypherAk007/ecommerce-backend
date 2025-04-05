@@ -22,7 +22,7 @@
 - getAllProducts():List<Products>
 - getProductsForType(ptype):List<Products>
 - listProduct(product):Response Status [Done]
-- getInventory(sellid):List<productsInventory>
+- getInventory(sellid):List<productsInventory> [Done]
 - addToCart(pid,quantity):Response Status
 - showAds(uid):List<Products>
 - processPayment(uid,amount):Response+tranx id

@@ -1,13 +1,7 @@
 package com.ecommerce.ecommercebackend.services;
 
-import com.ecommerce.ecommercebackend.models.Category;
-import com.ecommerce.ecommercebackend.models.Inventory;
-import com.ecommerce.ecommercebackend.models.Product;
-import com.ecommerce.ecommercebackend.models.Seller;
-import com.ecommerce.ecommercebackend.repositories.CategoryRepository;
-import com.ecommerce.ecommercebackend.repositories.InventoryRepository;
-import com.ecommerce.ecommercebackend.repositories.ProductRepository;
-import com.ecommerce.ecommercebackend.repositories.SellerRepository;
+import com.ecommerce.ecommercebackend.models.*;
+import com.ecommerce.ecommercebackend.repositories.*;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +13,14 @@ public class ProductService {
     private final InventoryRepository inventoryRepository;
     private final SellerRepository sellerRepository;
     private final CategoryRepository categoryRepository;
+    private final CustomerRepository customerRepository;
 
-    public ProductService(ProductRepository productRepository, InventoryRepository inventoryRepository, SellerRepository sellerRepository, CategoryRepository categoryRepository) {
+    public ProductService(ProductRepository productRepository, InventoryRepository inventoryRepository, SellerRepository sellerRepository, CategoryRepository categoryRepository, CustomerRepository customerRepository) {
         this.productRepository = productRepository;
         this.inventoryRepository = inventoryRepository;
         this.sellerRepository = sellerRepository;
         this.categoryRepository = categoryRepository;
+        this.customerRepository = customerRepository;
     }
 
     public Product listProduct(String name, String description, String category, String unitsOfMeasure, Double price,  Long sellerId,Double quantity) {
@@ -63,4 +59,33 @@ public class ProductService {
 
     }
 
+    public Product addToCart(Long userId,Long productId,Double quantity) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if(productOptional.isEmpty()){
+            throw new RuntimeException("Product Not Found!!");
+        }
+        Product product = productOptional.get();
+        Optional<Inventory> inventoryOptional = inventoryRepository.findByProduct(product);
+        if(inventoryOptional.isEmpty()){
+            throw new RuntimeException("Product not In Inventory!!");
+        }
+        Inventory productInventory = inventoryOptional.get();
+        if(productInventory.getQuantity()<quantity){
+            throw new RuntimeException(String.format("Product Quantity Higher than Inventory Stock Please Select Quantity <= !!",productInventory.getQuantity()));
+        }
+
+        Optional<Customer> customerOptional = customerRepository.findById(userId);
+        if(customerOptional.isEmpty()){
+            throw new RuntimeException("Invalid User!!");
+        }
+        productInventory.setQuantity(productInventory.getQuantity()-quantity);
+        inventoryRepository.save(productInventory);
+
+        Customer customer = customerOptional.get();
+        customer.getCart().add(product);
+        customer.getInterestedCategories().add(product.getCategory());
+        customerRepository.save(customer);
+        return product;
+
+    }
 }

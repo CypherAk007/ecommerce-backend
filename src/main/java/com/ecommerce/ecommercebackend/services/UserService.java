@@ -7,6 +7,8 @@ import com.ecommerce.ecommercebackend.repositories.SellerRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class UserService {
     private final CustomerRepository customerRepository;
@@ -24,6 +26,9 @@ public class UserService {
         Customer customer = new Customer();
         customer.setName(name);
         customer.setEmail(email);
+        customer.setCart(new ArrayList<>());
+        customer.setPreviousOrders(new ArrayList<>());
+        customer.setInterestedCategories(new ArrayList<>());
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         customer.setPassword(bCryptPasswordEncoder.encode(password));
         return customerRepository.save(customer);
@@ -46,6 +51,7 @@ public class UserService {
         Seller seller = new Seller();
         seller.setName(name);
         seller.setEmail(email);
+        seller.setListedProducts(new ArrayList<>());
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         seller.setPassword(bCryptPasswordEncoder.encode(password));
         return sellerRepository.save(seller);
