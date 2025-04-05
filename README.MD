@@ -24,17 +24,72 @@
 - listProduct(product):Response Status [Done]
 - getInventory(sellid):List<productsInventory> [Done]
 - addToCart(pid,quantity):Response Status [Done]
-- showAds(uid):List<Products>
-- processPayment(uid,amount):Response+tranx id
+- showAds(uid):List<Products>[Done]
+- processPayment(uid,amount):Response+tranx id 
   - factory method
-- notifyProductStockStatus(List<uid>):
-  - observer pattern.
+- notifyProductStockStatus(List<uid>):[Done]
+  - observer pattern.[Incomplete]
+- ![APIEndpoints.png](APIEndpoints.png)
 
 #### Step -2 Class Diagram
+```commandline
++----------------+           +------------------+
+|     User       |           |     Category     |
++----------------+           +------------------+
+| - userId       |           | - categoryId     |
+| - name         |           | - name           |
+| - email        |           +------------------+
+| - password     |
++----------------+
+       ▲
+       |
++--------------+
+|   Buyer      |
++--------------+        +----------------------+
+| - buyerId    |------->| interestedCategories |
+| - cart       |        +----------------------+
+| - orders     |
++--------------+
+       |
+       v
++--------------+
+|   Order      |
++--------------+
+| - orderId    |
+| - products   |
+| - status     |
++--------------+
 
++--------------+          +----------------+
+|   Product    |<-------->|   Seller       |
++--------------+          +----------------+
+| - productId  |          | - sellerId     |
+| - name       |          | - products     |
+| - price      |          +----------------+
+| - stock      |
+| - category   |
++--------------+
+
++----------------+        +-------------------------+
+|  Inventory     |        |    Notification         |
++----------------+        +-------------------------+
+| - product      |<-------| - product               |
+| - quantity     |        | - subscribedUsers       |
++----------------+        +-------------------------+
+
++------------------+
+| Advertisement    |
++------------------+
+| - adId           |
+| - product        |
+| - category       |
+| - link           |
++------------------+
+
+```
 
 #### Step -3 Schema/ER Diagram
-
+![ERDiagram.png](ERDiagram.png)
 ### Development Issues and Resolutions
 ##### Issue - 1 
 - Application shutsdown once schema created
