@@ -46,7 +46,6 @@ public class ProductService {
             throw new RuntimeException("Category Not Registered. Please Contact Admin!!");
         }
 
-
         Product product = new Product();
         product.setName(name);
         product.setDescription(description);

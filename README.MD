@@ -21,7 +21,7 @@
 - signup(name,email,pwd):Response status [Done]
 - getAllProducts():List<Products>
 - getProductsForType(ptype):List<Products>
-- listProduct(product):Response Status
+- listProduct(product):Response Status [Done]
 - getInventory(sellid):List<productsInventory>
 - addToCart(pid,quantity):Response Status
 - showAds(uid):List<Products>
