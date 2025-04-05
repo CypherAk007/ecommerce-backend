@@ -11,7 +11,7 @@ public class Product extends BaseModel{
     private String name;
     @ManyToOne
     private Category category;
-    private Long units;
+    private String unitOfMeasure;// 1unit = 1laptop -> grams,kg,liters...
     private String url;
     private Double rating;
     private String description;

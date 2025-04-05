@@ -12,5 +12,6 @@ import lombok.Setter;
 public class Inventory extends BaseModel{
     @OneToOne
     private Product product;
-    private Long quantity;//current stock
+    private Double quantity;//current stock based on product units
+
 }

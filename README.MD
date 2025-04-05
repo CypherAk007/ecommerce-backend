@@ -17,9 +17,9 @@
 - ![Requirements.png](Requirements.png)
 
 ##### API Endpoints
-- login(email,pwd):Response status
-- signup(name,email,pwd):Response status
-- getProducts(pid):List<Products>
+- login(email,pwd):Response status [Done]
+- signup(name,email,pwd):Response status [Done]
+- getAllProducts():List<Products>
 - getProductsForType(ptype):List<Products>
 - listProduct(product):Response Status
 - getInventory(sellid):List<productsInventory>
