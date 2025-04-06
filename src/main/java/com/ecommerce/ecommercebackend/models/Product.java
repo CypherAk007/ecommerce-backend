@@ -20,4 +20,5 @@ public class Product extends BaseModel{
     @ManyToOne
     @JoinColumn(name = "seller")
     private Seller seller;
+
 }

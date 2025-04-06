@@ -1,6 +1,7 @@
 package com.ecommerce.ecommercebackend.repositories;
 
 import com.ecommerce.ecommercebackend.models.Notification;
+import com.ecommerce.ecommercebackend.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +22,6 @@ public interface NotificationRepository extends JpaRepository<Notification,Long>
             "WHERE su.id = :customerId AND n.product.id = :productId")
     boolean existsByCustomerIdAndProductId(@Param("customerId") Long customerId,
                                            @Param("productId") Long productId);
+
+    List<Notification> findByProduct(Product product);
 }
